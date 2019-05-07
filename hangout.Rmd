@@ -1,7 +1,7 @@
 ---
 title: "Hangout for R"
 author: "Kuo,Yi-Chien"
-date: "2019/5/6??"
+date: "2019/5/6"
 output: html_document
 ---
 
@@ -10,15 +10,34 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ##R Introduction
+In addition to data processing and analysis, R has a complete operations for array and matrix and excellent graphical tools.Hence, R is also a fairly complete programming language.
 
-###Entering Simple Data 
+##Basic Operator
+The basic subject in R is vector. There are 6 main modes, logical, integer, double, single, complex, and character.
+
+###Arithmetic Operator
+
+```{r, echo=TRUE}
+5*40
+5+49
+1/0
+0/0
+Inf -Inf
+3^5
+31%%2
+31%/%2
+```
 
 ```{r, echo=TRUE}
 x <- 3
 x
 ```
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+**Example**
+```{r, echo=TRUE}
+intRate=0.01
+n = 10
+principal = 1500
+payment = principal * intRate /(1 - (1 + intRate)^(-n))
+payment
 ```
-
