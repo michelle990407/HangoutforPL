@@ -15,7 +15,7 @@ In addition to data processing and analysis, R has a complete operations for arr
 ##Basic Operator
 The basic subject in R is vector. There are 6 main modes, logical, integer, double, single, complex, and character.
 
-###Arithmetic Operator
+>Arithmetic Operator
 
 ```{r, echo=TRUE}
 5*40
@@ -28,16 +28,296 @@ Inf -Inf
 31%/%2
 ```
 
-```{r, echo=TRUE}
-x <- 3
-x
-```
+------
 
 **Example**
 ```{r, echo=TRUE}
-intRate=0.01
+intRate = 0.01
 n = 10
 principal = 1500
 payment = principal * intRate /(1 - (1 + intRate)^(-n))
 payment
+```
+
+------
+
+##Objects
+There are six types of subjects, vector, matrix, array, factor, list, data frame, function.
+
+>Vector 
+
+```{r, echo=TRUE}
+x <- c(0,10,20)
+x
+x[-3]
+seq(1,10,by=2) 
+rep(1,10) 
+```
+
+------
+
+**Example**  
+```{r, echo=TRUE}
+colors = c("brown","yellow","blue")
+colors
+paste(colors,"candy")  
+paste0(colors,"candy")
+substr(colors,2,4)
+```
+
+>Matrix
+
+```{r, echo=TRUE}
+m2=matrix(20:39,nrow=2,ncol=10,byrow=T)
+m2
+m2[2,5]
+m2[2,]
+m2[,10]
+```
+
+>Array
+
+```{r, echo=TRUE}
+array(1:120,c(5,4,3,2))
+out=array(1:120,c(5,4,3,2))
+out[,,2,2]
+out[c(2,4),c(1,3),2,2]
+```
+
+>Data Frame
+
+```{r, echo=TRUE}
+color=c("red","red","red1","blue")
+number=c(1,3,5,7)
+logic=c(T,T,F,F)
+out.fr=data.frame(colors=color,numbers=number,logics=logic)
+out.fr
+out.fr=data.frame(color,number,logics=logic)
+out.fr
+out.fr[,2] #Call by position
+out.fr[,"number"] #call by name
+out.fr$number #Call by name
+```
+
+##Common R Computing Functions
+
+>Descriptive Statistics Functions
+
+```{r, echo=TRUE}
+x <- 10:31
+x
+mean(x)
+var(x)
+sum(x)
+cumsum(x)
+sd(x)
+range(x)
+fivenum(x)
+```
+
+>Functions for Characters
+
+```{r, echo=TRUE}
+paste("A", 1:5, sep = "")
+paste("A", 1:5, sep = " ")
+paste("A", 1:5, sep = "#") 
+paste("Today is", date()) 
+```
+
+##R Graphics
+
+```{r, echo=TRUE}
+x1=(1:300)/100
+x2=(301:600)/100
+y1=3*x1+2
+y2=2*x2-0.5*x2^2
+plot(c(x1,x2),c(y1,y2),type="l")
+```
+
+------
+
+**Example**  
+
+```{r, echo=FALSE}
+VADeaths
+
+barplot(VADeaths, beside=TRUE, legend=TRUE, ylim=c(0,90),
+ ylab="Deaths per 1000",
+ main="Death rates in Virginia")
+
+dotchart(VADeaths, xlim=c(0,75),
+ xlab="Deaths per 1000",
+ main="Death rate in Virginia")
+```
+
+------
+
+**Example**  
+
+```{r, echo=TRUE}
+x <- rnorm(100)
+hist(x, breaks=5)
+
+D <- exp(rnorm(1000))
+qqplot(x, D, main = "D is skewed to the right")
+```
+
+##R Programming Language
+
+>Repetitive Execution
+
+###for()
+```{r, echo=TRUE}
+fib=c(1,1)
+golden_ratio <- c()
+for (i in 3:20) {
+  golden_ratio <- c(golden_ratio, fib[i-1]/fib[i-2])
+  fib[i] <- fib[i-1]+fib[i-2]
+  i=i+1 }
+golden_ratio
+```
+
+------
+
+###if()
+```{r, echo=TRUE}
+x=3
+if(x>2) y=x^2 else y=cos(x)
+y
+x=1
+if(x>2) y=x^2 else y=cos(x)
+y
+x=1
+if(x==2) y=x^2 else y=cos(x)
+y
+x=1
+if(x!=2) y=x^2 else y=cos(x)
+y
+```
+
+------
+
+###while()
+```{r, echo=TRUE}
+x <- 1
+f <- x^3 + 2 * x^2 -7
+tolerance <- 0.000001
+while (abs(f) > tolerance){ 
+ f.prime <- 3 * x^2 + 4 * x
+ x <- x - f /f.prime
+ f <- x^3 + 2 * x^2 -7
+}
+x
+```
+
+------
+
+>Function Writing And Editing
+
+```{r, echo=TRUE}
+x = 10
+g <- function() {
+  x <- 10*x   #this changes g's local x not the one in f
+return(x)
+}
+g()
+```
+
+------
+
+>Probability and Random Number Generation
+
+```{r, echo=TRUE}
+random.number <- numeric(10)
+random.seed <- 27218
+for (j in 1:10) {
+ random.seed <- (171*random.seed) %% 30269
+ random.number[j] <- random.seed / 30269
+}
+random.number
+
+runif(10)
+
+runif(10,min=-3,max=10)
+
+sample(1:100,size=10,replace=T)
+
+sample(1:100,size=10,replace=F)
+
+```
+
+------
+
+**Exercise**
+```{r, echo=TRUE}
+dbinom(x=4,size=6,prob=0.5)
+
+pbinom(4,6,0.5)
+
+qbinom(0.89,6,0.5)
+
+rbinom(24,15,0.1)
+
+```
+
+------
+
+**Exercise**
+```{r, echo=TRUE}
+set.seed(1)
+T = -log(1-runif(10000))/1
+EXP = rexp(10000,1)
+par(mfrow=c(1,2)) #一頁有兩張圖片
+hist(T,breaks=40)
+hist(EXP,breaks=40)
+```
+
+##Linear Algebra
+
+```{r, echo=TRUE}
+cbind(seq(1,3),seq(2,4),seq(3,5))
+1/cbind(seq(1,3),seq(2,4),seq(3,5)) 
+
+X <- matrix(c(1,2,3,1,4,9),ncol=2)
+X
+X[,2]
+X[,2,drop = FALSE]
+class(X[,2]) #"numeric"
+class(X[,2,drop = FALSE]) #"matrix"
+
+X=as.data.frame(x)
+X
+X$x
+```
+
+------
+
+**Exercise**
+```{r, echo=TRUE}
+H3 = matrix(c(1,1/2,1/3,1/2,1/3,1/4,1/3,1/4,1/5),nrow=3)
+H3
+svd(H3)
+chol(H3)
+chol2inv(H3)
+solve(H3)
+qr(H3)
+qr.Q(qr(H3))
+apply(H3,1,sum) #每一列加總 
+apply(H3,2,sum) #每一行加總
+```
+
+
+------
+
+**Linear Algebra**
+```
+t() #轉置矩陣
+t()%*%y #%*% 矩陣內積
+t() #轉置矩陣
+det() #判別式 ad-bc
+diag() #對角線
+dim() #dimension of rows and columns
+eigen(H)
+eigen(H)$values
+eigen(H)$vectors
 ```
